@@ -1,0 +1,7 @@
+/src/secret.ts
+/node_modules
+.env.development
+/src/Example.ts
+/dist
+/.parcel-cache
+index2.html
