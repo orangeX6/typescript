@@ -1,0 +1,45 @@
+Since traversing a large linked list can be time consuming, I just added a length property to my LinkedList and increment it when I add a new node. I perform a check to see if index >= this.length, which would tell me if should throw an out of bounds error.
+
+However, if I don't include throw new Error(LinkedList.INDEX_OUT_OF_BOUNDS) at the bottom of the function, TypeScript is unhappy. Is there anyway to tell typescript that I have addressed this concern via the second conditional? Or should there always be some sort of throw new Error("something descriptive here") at the bottom to catch an error you may have not considered?
+
+nodeAt(index: number): Node {
+    if (!this.head) {
+      throw new Error(LinkedList.EMPTY_LIST);
+    }
+    // TAKES CARE OF INVALID index
+    if (index >= this.length) {
+      throw new Error(LinkedList.INDEX_OUT_OF_BOUNDS);
+    }
+    let iterator: Node | null = this.head;
+    let count = 0;
+    while (iterator) {
+      if (count === index) {
+        return iterator;
+      }
+      iterator = iterator.next;
+      count++;
+    }
+    //throw new Error(LinkedList.INDEX_OUT_OF_BOUNDS);
+  }
+
+
+
+I took your method and threw it into a little snippet here
+
+Some notes:
+
+The issue isn't really solved by adding in the 'throw' at the bottom.  The reason you're seeing that error is that you're saying (with the return type annotation) that in all cases your function will return a 'Node', unless the function throws an error.  So adding in the 'throw' at the bottom essentially overrides the return type annotation.
+
+To really fix this, you need to update the return annotation to reflect your real implementation.  Your code has three possibilities: it will (1) return a Node, (2) return nothing, or void, and (3) throw an error.  As mentioned above, #3 doesn't get covered with the return type annotation, so that leaves #1 and #2.  You need to update the annotation to indicate that possible return values are (1) a Node or (2) nothing, or void.
+
+So that leaves us with a return type of:
+
+nodeAt(idx: number): NodeItem | void {
+Note that I renamed 'Node' to 'NodeItem' to prevent some name collisions with the Node class built into the browser.
+
+
+
+The other thing you might fix is to update this annotation:
+
+let iterator: NodeItem | null = this.head;
+At this point of the method, you've already put in a guard to ensure that 'this.head' is defined, so you know for sure that 'this.head' is of type 'NodeItem', not 'NodeItem | null'.  You could remove the '| null', or, better yet, remove the annotation altogether.
