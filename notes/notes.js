@@ -479,7 +479,7 @@ _ you do not have to add implements clause right here.This is not required at al
 _  ###############################################
 
 # 79 Configuring the TS Compiler
--> tsc -init
+-> tsc --init
 >> creates a tsc config file
 -> tsc -w
 >> Watches the typescript files and converts ts to js whenever there is a change
@@ -569,7 +569,7 @@ _ Interfaces
 
 
 # ⎛⎝(•‿•)⎠⎞
-# SECTION 11 - Reusable Code
+# SECTION 11 - Reusable Code ( INHERITANCE AND COMPOSITION )
 ##################################################
 -> ###############################################
 >> ###############################################
@@ -613,41 +613,111 @@ _ Interfaces
 138. App Wrapup
 _  ###############################################
 
-# 103 Project Setup
-# 104 CSV Data
 # 105 Type Definition Files - Again!
+-> npm i @types/node
+
 # 106 Reading CSV Files
 # 107 Running an Analysis
 # 108 Losing Dataset Context
+-> Issue with current approach (Watch Running an analysis)
+* Magic String Comparisons
+* Source of data is hardcoded
+* Data array is all strings, even though it might have numbers in it
+* Variable named after a specific team
+* Analysis type is fixed
+* No ability to output the report in different formats
+
 # 109 Using Enums
+
+* EXAMPLE
+>> enum MatchResult  {
+>>   HomeWin = 'H',
+>>   AwayWin = 'A',
+>>   Draw = 'D',
+>> };
+
 # 110 When to Use Enums
-# 111 Extracting CSV Reading
-# 112 Data Types
-# 113 Converting Date Strings to Dates
-# 114 Converting Row Values
-# 115 Type Assertions
-# 116 Describing a Row with a Tuple
-# 117 Not Done with FileReader Yet!
-# 118 Understanding Refactor #1
-# 119 Creating Abstract Classes
+_ Enums
+->> Follow near identical syntax rules as normal objects
+->> Creates an Object with the same keys and values when converted from TS to JS
+->> Primary goal is to signal to other engineers that these are all closely related values
+->> Use whenever we have a small fixed set of values that are all closely related and known at compile time
+
+_ It is possible to define an Enum without any values inside of it
+* EXAMPLE
+>> enum MatchResult  {
+>>   HomeWin,
+>>   AwayWin,
+>>   Draw,
+>> };
+
+
 # 120 Variable Types with Generics
-# 121 Applying a Type to a Generic Class
-# 122 Alternate Refactor
-# 123 Interface-Based Approach
-# 124 Extracting Match References - Again!
-# 125 Transforming Data
-# 126 Updating Reader References
+-> Generics  
+>> Like function arguments, but for types in class/function definitions
+>> Allows us to define the type of a property/argument/return value at a future point
+>> Used heavily when writing reusable code
+* EXAMPLE
+_We can call this <TypeOfData> anything, but by convention we use <T>
+class HoldAnything<TypeOfData> {
+  data: TypeOfData;
+}
+const holdNumber = new HoldAnything<number>()
+holdNumber.data = 123;
+
+const holdString = new HoldAnything<string>()
+holdString.data = 'SomeString'
+
 # 127 Inheritance vs Composition
+_ Inheritance 
+-> Inheritance is the case where we had the abstract class called the CSVfileReader and then we had a child class based upon it called the MatchReader.
+-> So this was a inheritance scenario because we wanted to have a parent class that had some core functionality around a CSV File Reader  
+-> We then extended that class and created a child class out of it and we kind of customized some of the behavior
+-> We customized behavior by implementing the mapRow
+>> Anytime we are inheriting from a parent class, we refer to that as an inheritance
+
+_ Composition 
+-> Composition was characterized by the fact that we had a class called MatchReader and the MatchReader had a reference to some other object.  
+-> We said that the reader property had to be any object that met the data reader interface.
+-> Then anytime we called the load method, rather than relying upon the match reader to 100% source our data we instead kind of delegated, the actual action of loading up some data to the outside data reader
+-> And we said the benefit to this approach was that we could easily swap in different styles of readers to customize how the match reader behaved.
+
+_ Inheritance vs composition
+>> think of it as a kind of mnemonic you can use to decide which style you are using at any given time is either a 'is a' relationship or 'has a' relation ship
+-> Inheritance - Characterized by an 'is a' relationship between two classes
+-> Composition - Characterized by a 'has a' relationship between two classes
+
+
 # 128 More on Inheritance vs Composition
 # 129 A Huge Misconception Around Composition
-# 130 Goal Moving Forward
-# 131 A Composition-Based Approach
-# 132 Implementing an Analyzer Class
-# 133 Building the Reporter
-# 134 Putting It All Together
-# 135 Generating HTML Reports
+_ Favor object composition over class inheritance
+IMPORTANT ->  WHEN IN DOUBT, JUST WATCH THIS VIDEO 
+
+
 # 136 One Last Thing!
+-> We can use static methods to generate an instance of a class to reduce the clutter in index.ts
+
 # 137 Oops, My Bad
 # 138 App Wrapup
+
+
+# ⎛⎝(•‿•)⎠⎞
+# SECTION 12 - Advanced Generics
+##################################################
+-> ###############################################
+>> ###############################################
+*  ###############################################
+139. More on Generics
+140. Type Inference with Generics
+141. Function Generics
+142. Generic Constraints
+_  ###############################################
+
+# 139 More on Generics
+# 140 Type Inference with Generics
+# 141 Function Generics
+# 142 Generic Constraints
+
+
 
 */

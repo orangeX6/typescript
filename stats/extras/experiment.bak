@@ -1,0 +1,54 @@
+import fs from 'fs';
+import { argv } from 'process';
+
+console.log('Hello There');
+const matches = fs
+  .readFileSync('football.csv', {
+    encoding: 'utf-8',
+  })
+  .split('\n')
+  .map((row: string): string[] => row.split(','));
+
+// const fields: string[] = [
+//   'date',
+//   'homeTeam',
+//   'awayTeam',
+//   'homeTeamGoals',
+//   'awayTeamGoals',
+//   'winner',
+//   'referee',
+// ];
+
+// interface Data {
+//   date: string;
+//   homeTeam: string;
+//   awayTeam: string;
+//   homeTeamGoals: number;
+//   awayTeamGoals: number;
+//   winner: string;
+//   referee: string;
+// }
+
+// const matchData = matches.map((el:Data[]) => el.reduce((acc: Data, curr: string, index)=>{
+//   const field:string = fields[index]
+//   let value
+//   if(field === 'date') value = new Date(curr)
+
+//   return (acc[field] = value, acc)
+// }, {})
+
+// const matchData = matches.map((el) => el);
+
+// const matchData: Data[] = matches.map(
+//   (el: string[]): Data =>
+//     el.reduce((acc: Data, curr: string, index) => {
+//       const field = fields[index];
+//       let value: string | number;
+//       if (field === 'homeTeamGoals' || field === 'awayTeamGoals') value = +curr;
+//       else value = curr;
+
+//       return (acc[field as keyof typeof acc] = value), acc;
+//     }, <Data>{})
+// );
+
+// console.log(matchData);
