@@ -43,3 +43,79 @@ The other thing you might fix is to update this annotation:
 
 let iterator: NodeItem | null = this.head;
 At this point of the method, you've already put in a guard to ensure that 'this.head' is defined, so you know for sure that 'this.head' is of type 'NodeItem', not 'NodeItem | null'.  You could remove the '| null', or, better yet, remove the annotation altogether.
+
+
+// 142 
+//QUESTION 1 
+Little bit of backstory: when we create a class, we are creating two separate things in the world of TS - (1) the class definition (2) an interface that describes this class.
+
+So when we write:
+
+class House {
+    print() {
+        console.log('I am a house')
+    }
+}
+We get both the class definition and something that looks like this:
+
+interface House {
+  print(): void;
+}
+
+
+Now here's the interesting part: what happens if we also define a class of 'Car' that looks similar?  Say we do:
+
+class Car {
+    print() {
+        console.log('I am a car')
+    }
+}
+Just like above, we now have a class definition and an interface of Car that looks like this:
+
+interface Car {
+  print(): void
+}
+
+
+Here's the fun part.  Does class Car satisfy the interface House ?  Yes, it does!  Does class House satisfy the interface House ?  Yes, it does!
+
+So because these two classes satisfy the other's interface, they can be used in place of each other! 
+
+You can verify this by making an even more direct example:
+
+
+
+const areTheySame = (input: House) => {};
+ 
+areTheySame(new House());  // OK!
+areTheySame(new Car());  // OK!  Surprising, but OK!
+Here's a typescript playground demonstrating this: link
+
+
+// QUESTION 2
+[SOLVED] Why not <Printable>
+Why is <T extends Printable> better than :
+function printHousesOrCars(arr : Printable[]){
+   //code here
+}
+
+I know both would work in this example, but what is the advantage of using <T extends Printable>...
+I know this might be a advance object oriented question, but still I want to know
+
+Stephen — Instructor
+Answer
+The interface-based approach would work as well, and probably even be preferable to using a generic.  The real strength of a generic function is that it allows us to dynamically specify types that can't be customized by that argument annotation.
+
+A great example is the axios.get call.  Axios.get is a generic function.  If we provide a type to the generic element, it will customize the type of the response.data property.  So, for example:
+
+interface Color {
+  r: number;
+  g: number;
+  b: number;
+}
+const response = await axios.get<Color>('/api/color/12');
+response.data.r // number
+response.data.g // number
+response.data.b // number
+response.data.asdf  // ERROR - 'asdf' doesn't exist on type Color
+Understanding generic constraints is just a bit easier if we picture it from the perspective of the argument, which is why I showed it this way in the video.
