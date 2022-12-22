@@ -1,0 +1,3 @@
+>> To run this project we have to run two processes -
+>> parcel index.html
+>> json-server -w db.json

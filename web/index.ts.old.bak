@@ -1,0 +1,47 @@
+import { User } from './models/User';
+
+const user = new User({ name: 'orange', age: 26 });
+
+// console.log(user.get('name'));
+// console.log(user.get('age'));
+
+// user.set({ name: 'pranav' });
+// console.log(user.get('name'));
+// console.log(user.get('age'));
+user.on('change', () => console.log('Change #1'));
+user.on('change', () => console.log('Change #2'));
+user.on('click', () => console.log('Clicked'));
+console.log(user);
+user.trigger('change');
+user.trigger('save');
+user.trigger('click');
+
+//////////////BACKUP 2
+user.events.on('change', () => {
+  console.log('Change');
+});
+user.events.trigger('change');
+
+// user.set({ name: 'new name', age: 30 });
+// user.save();
+
+// const userTwo = new User({ name: 'zed', age: 0 });
+// userTwo.save();
+
+
+// EXTRACTED ON 202- STRICT NULL CHECKS
+import { UserForm } from './views/UserForm';
+import { User } from './models/User';
+
+const user = User.buildUser({ name: 'Nami', age: 25 });
+// Putting ! to let ts know that this element will always be present and never be null
+const userForm = new UserForm(document.getElementById('root')!, user);
+userForm.render();
+//Alternatively
+// const root = document.querySelector('root');
+// if (root) {
+//   const userForm = new UserForm(root, user);
+//   userForm.render()
+// } else {
+//   throw new Error('Root element not found!');
+// }

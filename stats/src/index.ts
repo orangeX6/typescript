@@ -10,7 +10,7 @@ import { WinsAnalysis } from './Analyzers/WinsAnalysis';
 // const matchReader = new MatchReader(csvReader);
 // matchReader.load();
 //-> Doing the above using static method
-console.log(MatchReader.fromCSV('football.csv'));
+// console.log(MatchReader.fromCSV('football.csv'));
 const matchReader = MatchReader.fromCSV('football.csv');
 matchReader.load();
 
