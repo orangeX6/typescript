@@ -3,3 +3,8 @@ export enum MatchResult {
   AwayWin = 'A',
   Draw = 'D',
 }
+// export enum MatchResultTwo {
+//   HomeWin,
+//   AwayWin,
+//   Draw,
+// }
