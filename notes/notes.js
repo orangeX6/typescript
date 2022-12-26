@@ -5,6 +5,9 @@
 _ ctrl+p open command palette >fold level 2 
 >> to wrap up functions
 
+_Transpiler vs Compiler 
+A compiler is a software that converts high-level language to low-level assembly language and we are all quite familiar with its name and work. A transpiler is another software, sometimes called a source-to-source compiler, which converts a high-level language to another high-level language.
+
 # 2
 
 
