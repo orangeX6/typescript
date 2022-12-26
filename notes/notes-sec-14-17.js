@@ -213,4 +213,96 @@ _ So if we ever wanted to access that router, we are going to import app router 
 
 # 261 App Wrapup
 
+
+
+# ⎛⎝(•‿•)⎠⎞
+# SECTION 16 -  ADVANCED EXPRESS AND TS INTEGRATION
+##################################################
+-> ###############################################
+>> ###############################################
+*  ###############################################
+_  ###############################################
+262. React and Redux Overview
+263. App Overview
+264. Generating the App
+265. Simple Components
+266. Interfaces with Props
+267. Handling Component State
+268. Confusing Component State!
+269. Functional Components
+270. Redux Setup
+271. Action Creators with Typescript
+272. Action Types Enum
+273. The Generic Dispatch Function
+274. A Reducer with Enums
+275. Validating Store Structure
+276. Connecting a Component to Redux
+277. Rendering a List
+278. Adding in Delete Functionality
+279. Breaking Out Action Creators
+280. Expressing Actions as Type Union
+281. Type Guards in Reducers
+282. Wiring up deleteToDo Action
+283. Again, Type Definition Files
+284. Tracking Loading with Component State
+285. App Wrapup
+##################################################
+
+# 262 React and Redux Overview
+# 263 App Overview
+# 264 Generating the App
+# 265 Simple Components
+
+# 266 Interfaces with Props
+# 267 Handling Component State
+_ This will work 
+state = { counter: 0 };
+
+>> This wont work
+  constructor(props: AppProps) {
+    super(props);
+
+    this.state = { counter: 0 };
+  }
+
+  These are two very different statements and will have two very different impacts in the world of typescript, because if you check the index.ts file of App.Component you will notice that state is a Readonly empty object 
+_ To make the above work add an interface of state type to React component
+interface AppState {
+  counter: number;
+}
+class App extends React.Component<AppProps, AppState> {
+  constructor(props: AppProps) {
+    super(props);
+    this.state = { counter: 0 };
+  }
+
+# 268 Confusing Component State!
+# 269 Functional Components
+interface AppProps {
+  color?: string;
+}
+
+>> FUNCTIONAL COMPONENT
+const App = (props: AppProps): JSX.Element => {
+  return <div>{props.color}</div>;
+};
+
+# 270 Redux Setup
+# 271 Action Creators with Typescript
+# 272 Action Types Enum
+# 273 The Generic Dispatch Function
+# 274 A Reducer with Enums
+# 275 Validating Store Structure
+# 276 Connecting a Component to Redux
+# 277 Rendering a List
+# 278 Adding in Delete Functionality
+# 279 Breaking Out Action Creators
+# 280 Expressing Actions as Type Union
+# 281 Type Guards in Reducers
+# 282 Wiring up deleteToDo Action
+# 283 Again, Type Definition Files
+# 284 Tracking Loading with Component State
+# 285 App Wrapup
+
+
 */
