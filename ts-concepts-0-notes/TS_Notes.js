@@ -128,4 +128,155 @@ _ No Emit On Error - default false
 >>"noEmitOnError": true // Disable emitting files if any type checking errors are reported.,
 
 
+_#################################################
+->##############################################
+>>###############################################
+*###############################################
+# > CLASSES AND INTERFACE  
+
+# CLASSES
+_PRIVATE CONSTRUCTORS 
+_ There is a pattern in object oriented programming called the singleton pattern.
+-> Singleton pattern is about ensuring that you only have exactly one instance of a certain class. 
+>> This can be useful in scenarios where in you somehow cant use static methods or properties, but at the same time you want to ensure that you cant create multiple objects based on a class, but you only have exactly one object based on a class.
+_ EXAMPLE 
+
+class AccountingDepartment extends Department {
+  private _lastReport: string;
+  private static instance: AccountingDepartment;
+
+  private constructor(id: string, private reports: string[]) {
+    super(id, 'Accounting');
+    this._lastReport = reports[0];
+  }
+  static getInstance() {
+    if (this.instance) {
+      return this.instance;
+    }
+  this.instance = new AccountingDepartment('d2', []);
+  return this.instance;
+  }
+}
+const accounting = AccountingDepartment.getInstance();
+
+>>  we cannot call new on the constructor now because the constructor is private
+
+
+#INTERFACE 
+_ We can implement multiple interfaces separated by a comma 
+-> We can also add a readonly modifier on interface.
+_ Unlike classes, you can inherit from multiple interfaces 
+>> EXAMPLE
+>> interface Greetable extends Named, AnotherInterface{}
+
+_ You can add optional params to both classes and interfaces
+
+
+######################
+# ADVANCED TYPES 
+_ Intersection types
+_ Type Guards
+_ Discriminated Unions
+_ Type Casting
+_ Function Overloads
+
+
+_ Discriminated Unions
+-> Its a pattern that we can use when working with union types that makes implementing type guard easier
+
+_ Index Properties
+>> A feature that allows us to create objects which are more flexible regarding the properties they hold
+
+
+############################################################
+##########################  GENERICS #######################
+############################################################
+_ A generic type is a type which is kind of connected with some other type and is really flexible regarding which exact type that other type is
+>> GENERIC TYPES BUILT INTO JS 
+-> Array 
+-> Promise
+
+
+
+
+
+
+
+
+
+
+
+############################################################
+##########################  MIXINS #######################
+############################################################
+TypeScript (and JavaScript) classes support strict single inheritance. So you cannot do:
+class User extends Tagged, Timestamped { // ERROR : no multiple inheritance
+}
+Another way of building up classes from reusable components is to build them by combining simpler partial classes called mixins.
+The idea is simple, instead of a class A extending class B to get its functionality, function B takes class A and returns a new class with this added functionality. Function B is a mixin.
+[A mixin is] a function that
+takes a constructor,
+creates a class that extends that constructor with new functionality
+returns the new class
+A complete example
+// Needed for all mixins
+type Constructor<T = {}> = new (...args: any[]) => T;
+
+////////////////////
+// Example mixins
+////////////////////
+
+// A mixin that adds a property
+function Timestamped<TBase extends Constructor>(Base: TBase) {
+  return class extends Base {
+    timestamp = Date.now();
+  };
+}
+
+// a mixin that adds a property and methods
+function Activatable<TBase extends Constructor>(Base: TBase) {
+  return class extends Base {
+    isActivated = false;
+
+    activate() {
+      this.isActivated = true;
+    }
+
+    deactivate() {
+      this.isActivated = false;
+    }
+  };
+}
+
+////////////////////
+// Usage to compose classes
+////////////////////
+
+// Simple class
+class User {
+  name = '';
+}
+
+// User that is Timestamped
+const TimestampedUser = Timestamped(User);
+
+// User that is Timestamped and Activatable
+const TimestampedActivatableUser = Timestamped(Activatable(User));
+
+////////////////////
+// Using the composed classes
+////////////////////
+
+const timestampedUserExample = new TimestampedUser();
+console.log(timestampedUserExample.timestamp);
+
+const timestampedActivatableUserExample = new TimestampedActivatableUser();
+console.log(timestampedActivatableUserExample.timestamp);
+console.log(timestampedActivatableUserExample.isActivated);
+
+
+_ type Constructor<T = {}> = new (...args: any[]) => T;
+>> an explanation of the code you've provided:
+-> This code defines a type called Constructor which represents a constructor function for a type T. The T type is defined as an empty object by default.
+-> The type Constructor is defined as a new function that takes in a variable number of arguments of any type (...args: any[]) and returns an object of type T (=> T).
 */
