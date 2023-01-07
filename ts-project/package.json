@@ -1,0 +1,19 @@
+{
+  "name": "ts-project",
+  "version": "1.0.0",
+  "description": "TypeScript",
+  "main": "app.js",
+  "scripts": {
+    "start": "lite-server",
+    "start:watch": "tsc --w"
+  },
+  "keywords": [
+    "typescript",
+    "course"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "lite-server": "^2.5.4"
+  }
+}
