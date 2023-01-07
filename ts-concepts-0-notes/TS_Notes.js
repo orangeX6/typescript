@@ -198,14 +198,6 @@ _ A generic type is a type which is kind of connected with some other type and i
 
 
 
-
-
-
-
-
-
-
-
 ############################################################
 ##########################  MIXINS #######################
 ############################################################
@@ -279,4 +271,60 @@ _ type Constructor<T = {}> = new (...args: any[]) => T;
 >> an explanation of the code you've provided:
 -> This code defines a type called Constructor which represents a constructor function for a type T. The T type is defined as an empty object by default.
 -> The type Constructor is defined as a new function that takes in a variable number of arguments of any type (...args: any[]) and returns an object of type T (=> T).
+
+
+
+############################################################
+##########################  DECORATORS #####################
+############################################################
+ ->> Types of decorators 
+ _ Class decorator
+ _ Function decorator
+ _ parameter decorator
+ 
+_ Class Decorator
+-> Parameters ( takes the constructor of class as a parameter)
+
+_ Function decorator
+-> Parameters (class , method, propertyDescriptor )
+
+_ parameter decorator 
+-> Parameters (target: class, key: method, index: indexof param )
+
+_ Decorators only run once, when the class is first defined 
+>> these decorators do not run at runtime when u call a method or when you work with a property
+->> These decorators instead allows you to do additional behind the scenes setup work when a class is defined
+
+_ RETURNING VALUES
+-> CLASS, METHOD AND ACCESSOR DECORATORS CAN RETURN A VALUE AND YOU CAN USE THAT VALUE
+! DECORATORS ON PARAMETERS AND PROPERTIES CAN ALSO RETURN SOMETHING BUT TYPESCRIPT WILL IGNORE IT
+
+? What can you return from a accessor or a method decorator? 
+-> You can return a brand new property descriptor
+
+
+_ What does "this" refer to here? 
+-> "this" is inside of the getter method. So this will refer to whatever is responsible for triggering the getter method.
+->> The getter method will be triggered by the concrete object to which it belongs.
+>> So this inside of the getter method will always refer to the object on which we define the getter method.
+-> The getter is like an extra layer between the function thats been executed and the object to which it belongs and the event listener.
+-> Therefore "this" in here will refer to the object on which we originally define the method, so we can safely bind this for the original method and ensure that now "this" inside of the original method will also refer to the exact same object
+
+function Autobind(
+  target: any,
+  key: string,
+  descriptor: PropertyDescriptor
+): PropertyDescriptor {
+  const originalMethod = descriptor.value;
+  const adjustedDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn
+    },
+  };
+}
+
+
 */
