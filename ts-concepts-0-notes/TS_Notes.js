@@ -326,8 +326,32 @@ function Autobind(
   };
 }
 
+_ NAMESPACES
+_You can put namespace across any TS Code
+
+_ Declaring namespace 
+namespace DragDropInterfaces {
+  export interface Draggable {
+    dragStartHandler(event: DragEvent): void;
+    dragEndHandler(event: DragEvent): void;
+  }
+
+  export interface DragTarget {
+    dragOverHandler(event: DragEvent): void;
+    dropHandler(event: DragEvent): void;
+    dragLeaveHandler(event: DragEvent): void;
+  }
+}
 
 
+_ using namespace 
+_ The three backslash is not for comment but a syntax recognized by TS
+* /// <reference path="drag-drop-interface.ts" />
 
+_ THere is a special thing about namespace. You can use them to split your code but you then have to put the things that will use something from that import namespace into the same namespace
+
+_ This wont work yet coz namespaces are present in TS world, when converted to JS the connection is lost to the imported files
+
+_ To make this work, we also need to enable outfile in tsconfig and change the module from commonjs to amd
 
 */
