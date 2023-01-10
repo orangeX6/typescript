@@ -14,6 +14,7 @@ export class UserEdit extends View<User, UserProps> {
   onRender(): void {
     new UserForm(this.sections.userForm, this.model).render();
     new UserShow(this.sections.userShow, this.model).render();
+    // console.log(this);
   }
 
   template(): string {

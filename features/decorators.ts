@@ -28,6 +28,9 @@ class Boat {
     return `This boat color is ${this.color}`;
   }
 
+  yolo() {
+    console.log('EXP');
+  }
   // the decorator just executes the function with the following args -  testDecorator(Boat.prototype, 'pilot');
   @logError('Oops boar was sunk in ocean')
   pilot(
@@ -47,11 +50,11 @@ function testDecorator(target: any, key: string): void {
 
 function logError(errorMessage: string) {
   return function (target: any, key: string, desc: PropertyDescriptor): void {
+    console.log(target, key, desc, 'GGGGGGGGGGGGGG');
     const method = desc.value;
-
     desc.value = function () {
       try {
-        method();
+        method('fast', true);
       } catch (e) {
         console.log(errorMessage);
       }
@@ -69,4 +72,4 @@ function classDecorator(constructor: typeof Boat) {
   console.log(constructor);
 }
 
-// new Boat().pilot();
+new Boat().pilot('fast', true);
